@@ -2,18 +2,16 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
+const path = require('path'); // Added for serving React
 require('dotenv').config();
-const path = require('path');
+
 const app = express();
 
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: 'http://localhost:5173', 
-    credentials: true 
-}));
 
+// Database Connection Pool (TiDB Serverless)
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -25,6 +23,8 @@ const pool = mysql.createPool({
         rejectUnauthorized: true
     }
 });
+
+// --- API ROUTES ---
 
 // 1. Registration Route
 app.post('/register', async (req, res) => {
@@ -50,6 +50,8 @@ app.post('/login', async (req, res) => {
         }
 
         const user = users[0];
+        
+        // Generate Token
         const token = jwt.sign(
             { uid: user.uid, username: user.username, role: user.role },
             process.env.JWT_SECRET,
@@ -59,10 +61,10 @@ app.post('/login', async (req, res) => {
         const expiryTime = new Date(Date.now() + 3600000).toLocaleTimeString();
         await pool.execute('INSERT INTO UserToken (token, uid, expairy) VALUES (?, ?, ?)', [token, user.uid, expiryTime]);
 
+        // Simplified Cookie Settings (Since frontend and backend are now together)
         res.cookie('jwtToken', token, { 
             httpOnly: true, 
-            secure: false, 
-            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production', // Automatically true when deployed on Render
             maxAge: 3600000 
         });
 
@@ -99,21 +101,18 @@ app.get('/getBalance', verifyToken, async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch balance" });
     }
-    // --- DEPLOYMENT: Serve React Frontend ---
-// This tells Express to serve the static files React builds
+});
+
+// --- FRONTEND INTEGRATION ---
+
+// Serve the static files built by React
 app.use(express.static(path.join(__dirname, 'kodbank-frontend', 'dist')));
 
-// For any route not caught by our API, hand it over to React Router
+// Catch-all route: If the user goes to any path not defined above (like /dashboard), send them the React app
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'kodbank-frontend', 'dist', 'index.html'));
 });
-app.use(express.static(path.join(__dirname, 'kodbank-frontend', 'dist')));
 
-// For any route not caught by our API, hand it over to React Router
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'kodbank-frontend', 'dist', 'index.html'));
-});
-
-
+// --- START SERVER ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Backend server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Fullstack server running on port ${PORT}`));
