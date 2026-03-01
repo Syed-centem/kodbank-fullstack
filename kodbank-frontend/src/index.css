@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* 1. NUKE VITE DEFAULTS */
+html, body, #root { 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    margin: 0 !important; 
+    padding: 0 !important; 
+    max-width: none !important; 
+    text-align: left !important; 
+    background-color: #f8fafc;
+    overflow-x: hidden;
+}
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+/* 2. SPLIT SCREEN LAYOUT (Exactly like the recording) */
+.split-layout { display: flex; width: 100vw; height: 100vh; }
+
+.split-left { 
+    flex: 1; 
+    /* The exact blue architectural building look */
+    background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070') center/cover; 
+    color: white; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    padding: 5rem; 
+}
+.split-left svg { width: 50px; height: 50px; margin-bottom: 1.5rem; }
+.split-left h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: -1px; }
+.split-left p { font-size: 1.2rem; color: #cbd5e1; max-width: 450px; line-height: 1.6; }
+
+.split-right { 
+    flex: 1; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: white; 
+    position: relative; 
+}
+
+/* 3. PREMIUM FORM STYLING */
+.form-container { width: 100%; max-width: 440px; padding: 2rem; }
+.form-container h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a; }
+.form-container > p { color: #64748b; margin-bottom: 2.5rem; font-size: 1rem; }
+
+.input-group { margin-bottom: 1.5rem; }
+.input-group label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.input-field { 
+    width: 100%; 
+    padding: 0.85rem 1rem; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 0.5rem; 
+    font-size: 1rem; 
+    outline: none; 
+    transition: all 0.2s; 
+    color: #0f172a;
+    background-color: #f8fafc;
+}
+.input-field:focus { border-color: #3b82f6; background-color: white; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+.btn-primary { 
+    width: 100%; 
+    padding: 1rem; 
+    background-color: #0f172a; 
+    color: white; 
+    border: none; 
+    border-radius: 0.5rem; 
+    font-weight: 600; 
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+    margin-top: 1rem; 
+}
+.btn-primary:hover { background-color: #1e293b; }
+
+.form-footer { text-align: center; margin-top: 2rem; font-size: 0.95rem; color: #64748b; }
+.form-footer a { color: #3b82f6; text-decoration: none; font-weight: 600; }
+.form-footer a:hover { text-decoration: underline; }
+
+/* 4. DASHBOARD STYLING */
+.dashboard-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 4rem; background: white; border-bottom: 1px solid #e2e8f0; }
+.nav-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.25rem; color: #0f172a;}
+.nav-logout { display: flex; align-items: center; gap: 0.5rem; color: #64748b; font-weight: 600; font-size: 0.95rem; cursor: pointer; border: none; background: none; }
+
+.dashboard-wrapper { padding: 4rem; max-width: 1200px; margin: 0 auto; display: flex; gap: 2rem; align-items: flex-start; }
+
+.main-card { flex: 2; background-color: #0f172a; color: white; border-radius: 1rem; padding: 3rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+.main-card .small-text { color: #94a3b8; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.main-card h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 3rem; }
+
+.balance-label { color: #94a3b8; font-size: 0.9rem; font-weight: 500;}
+.balance-display { font-size: 4rem; font-weight: 700; margin: 0.25rem 0; letter-spacing: -2px;}
+.balance-status { color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 3rem; }
+
+.btn-refresh { width: 100%; padding: 1.2rem; background-color: #3b82f6; color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s; font-size: 1.1rem;}
+.btn-refresh:hover { background-color: #2563eb; }
+
+.side-cards { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+.stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+.stat-card p { color: #64748b; font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600; }
+.stat-card h3 { font-size: 1.25rem; font-weight: 700; color: #0f172a;}
+.text-green { color: #10b981 !important; }
+
+/* 5. CUSTOM DEVELOPER BADGE */
+.badge { position: absolute; bottom: 2rem; right: 2rem; background: #0f172a; color: white; padding: 0.6rem 1.2rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
