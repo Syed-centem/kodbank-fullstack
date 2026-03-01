@@ -109,7 +109,7 @@ app.get('/getBalance', verifyToken, async (req, res) => {
 app.use(express.static(path.join(__dirname, 'kodbank-frontend', 'dist')));
 
 // Catch-all route: If the user goes to any path not defined above (like /dashboard), send them the React app
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, 'kodbank-frontend', 'dist', 'index.html'));
 });
 
